@@ -16,9 +16,11 @@ import java.util.stream.StreamSupport;
 @RequestMapping("/games")
 public record GameController(RestHighLevelClient client) {
     @GetMapping
-    public Stream search(@RequestParam(name="query") String queryString) throws IOException {
+    public Stream search(
+        @RequestParam(name="query") String queryString,
+        @RequestParam(name="source", defaultValue = "6") String source ) throws IOException {
         QueryStringQueryBuilder query = new QueryStringQueryBuilder(queryString);
-        SearchRequest request = new SearchRequest("games").source(new SearchSourceBuilder().query(query));
+        SearchRequest request = new SearchRequest("games").source(new SearchSourceBuilder().query(query).size(Integer.parseInt(source)));
         SearchResponse result = this.client.search(request, RequestOptions.DEFAULT);
         return StreamSupport.stream(result.getHits().spliterator(), false).map((g) -> g.getSourceAsMap());
     }
