@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Launcher {
 
     public static void main(String[] args) {
+        System.setProperty("server.servlet.context-path", "/api");
         SpringApplication.run(Launcher.class, args);
     }
 }
