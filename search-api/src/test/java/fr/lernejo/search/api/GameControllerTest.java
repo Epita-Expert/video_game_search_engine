@@ -8,17 +8,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.hamcrest.CoreMatchers.containsStringIgnoringCase;
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
-class HelloControllerIT {
-
+public class GameControllerTest {
     @Test
-    void say_hello_api_respond_with_a_message_containing_hello(@Autowired MockMvc mockMvc) throws Exception {
-        mockMvc
-            .perform(MockMvcRequestBuilders.get("/api/hello"))
+    void search(@Autowired MockMvc mockMvc) throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/games?query=developer:\"Epic Games\""))
             .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.jsonPath("message", containsStringIgnoringCase("hello")));
+            .andExpect(MockMvcResultMatchers.content().contentType("application/json"));
     }
 }
+

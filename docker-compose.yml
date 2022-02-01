@@ -13,21 +13,21 @@ services:
         container_name: elasticsearch
         ports:
             - 9200:9200
-            - 9300:9300
+            # - 9300:9300
         environment:
             - discovery.type=single-node
             - xpack.security.enabled=true
             - ELASTIC_PASSWORD=admin
-            - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
-        mem_limit: 4g
-    kibana:
-        image: kibana:7.16.3
-        container_name: kibana
-        ports:
-            - 5601:5601
-        environment:
-            ELASTICSEARCH_USERNAME: elastic
-            ELASTICSEARCH_PASSWORD: admin
-        depends_on:
-            - elasticsearch
+            - bootstrap.memory_lock=true
+            - "ES_JAVA_OPTS=-Xms256m -Xmx512m"
+#    kibana:
+#        image: kibana:7.16.3
+#        container_name: kibana
+#        ports:
+#            - 5601:5601
+#        environment:
+#            ELASTICSEARCH_USERNAME: elastic
+#            ELASTICSEARCH_PASSWORD: admin
+#        depends_on:
+#            - elasticsearch
 
